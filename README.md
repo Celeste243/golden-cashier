@@ -1,32 +1,38 @@
-# React + TypeScript + Vite
+# Golden Cashier 🛒
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Aplicación web de **Punto de Venta (POS)** desarrollada con **React**, **TypeScript** y **Vite**, diseñada para agilizar la búsqueda de productos, el filtrado por categorías y la gestión de un carrito de compras en tiempo real.
 
-Currently, two official plugins are available:
+## Funcionalidades principales
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Catálogo de productos:** Visualización en grilla con precio, categoría y control de stock disponible en tiempo real.
+- **Búsqueda instantánea:** Filtrado dinámico por nombre de producto desde el encabezado.
+- **Filtro por categorías:** Selección rápida entre *Todos*, *Lácteos*, *Bebidas* y *Almacén*, con opción de reinicio rápido de filtros.
+- **Gestión del carrito:**
+  - Agregar productos respetando el límite de stock disponible.
+  - Aumentar (`+`) o disminuir (`-`) cantidades directamente desde el panel del carrito.
+  - Eliminar ítems individuales (`X`).
+  - Cálculo automático del total a cobrar y confirmación visual al finalizar la venta.
 
-## React Compiler
+## Estructura del proyecto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```text
+src/
+├── components/
+│   ├── Header.tsx          # Encabezado, buscador e indicador de ítems en carrito
+│   ├── CategoryFilter.tsx  # Botones de filtro por categoría y limpieza de filtros
+│   ├── ProductCard.tsx     # Tarjeta individual de producto con control de stock
+│   └── CartPanel.tsx       # Panel lateral de resumen, cantidades y cobro
+├── data/
+│   └── mockData.ts         # Catálogo inicial de productos tipados
+├── types/
+│   └── product.ts          # Interfaces Product, CartItem y tipo Category
+└── App.tsx                 # Estado centralizado y lógica principal de la aplicación
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Cómo ejecutar el proyecto localmente
+Clonar el repositorio:  git clone <https://github.com/Celeste243/golden-cashier>
+Instalar las dependencias:
+npm install
+Iniciar el servidor de desarrollo:
+npm run dev
+Generar el build de producción:
+npm run build
