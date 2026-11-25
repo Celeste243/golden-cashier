@@ -2,12 +2,19 @@ import type { CartItem } from '../types/product';
 
 interface CartPanelProps {
   items: CartItem[];
+  onIncreaseItem: (item: CartItem) => void;
+  onDecreaseItem: (id: number) => void;
   onRemoveItem: (id: number) => void;
   onClearCart: () => void;
 }
 
-export function CartPanel({ items, onRemoveItem, onClearCart }: CartPanelProps) {
-  // Calcula el total multiplicando precio por cantidad de cada ítem
+export function CartPanel({
+  items,
+  onIncreaseItem,
+  onDecreaseItem,
+  onRemoveItem,
+  onClearCart,
+}: CartPanelProps) {
   const totalAmount = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
@@ -45,12 +52,30 @@ export function CartPanel({ items, onRemoveItem, onClearCart }: CartPanelProps) 
                   padding: '8px 0',
                   borderBottom: '1px solid #f3f4f6',
                   fontSize: '14px',
+                  gap: '8px',
                 }}
               >
                 <div>
                   <strong>{item.name}</strong>
-                  <div style={{ color: '#6b7280' }}>
-                    {item.quantity} x ${item.price} = ${item.quantity * item.price}
+                  <div style={{ color: '#6b7280', marginTop: '4px' }}>
+                    <button
+                      type="button"
+                      onClick={() => onDecreaseItem(item.id)}
+                      style={{ padding: '2px 6px', cursor: 'pointer', marginRight: '6px' }}
+                    >
+                      -
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button
+                      type="button"
+                      onClick={() => onIncreaseItem(item)}
+                      style={{ padding: '2px 6px', cursor: 'pointer', marginLeft: '6px' }}
+                    >
+                      +
+                    </button>
+                    <span style={{ marginLeft: '8px' }}>
+                      = ${item.quantity * item.price}
+                    </span>
                   </div>
                 </div>
 
