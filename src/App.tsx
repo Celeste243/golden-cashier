@@ -40,6 +40,17 @@ export function App() {
     });
   };
 
+  // Disminuir en 1 la cantidad de un producto (si llega a 0, lo quita)
+  const handleDecreaseItem = (id: number): void => {
+    setCart((prevCart) =>
+      prevCart
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
+  };
+
   // Quitar un producto del carrito por su id
   const handleRemoveFromCart = (id: number): void => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
@@ -95,6 +106,8 @@ export function App() {
         {/* Panel derecho del carrito */}
         <CartPanel
           items={cart}
+          onIncreaseItem={handleAddToCart}
+          onDecreaseItem={handleDecreaseItem}
           onRemoveItem={handleRemoveFromCart}
           onClearCart={handleClearCart}
         />
