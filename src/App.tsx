@@ -67,6 +67,15 @@ export function App() {
     setCart([]);
   };
 
+  // Reiniciar búsqueda y categoría
+  const handleClearFilters = (): void => {
+    setSearchText('');
+    setSelectedCategory('Todos');
+  };
+
+  const hasActiveFilters: boolean =
+    searchText.trim() !== '' || selectedCategory !== 'Todos';
+
   // Cantidad total de unidades en el carrito para mostrar en el Header
   const totalCartItems: number = cart.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -81,12 +90,16 @@ export function App() {
       <CategoryFilter
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
+        hasActiveFilters={hasActiveFilters}
+        onClearFilters={handleClearFilters}
       />
 
       <main style={{ display: 'grid', gridTemplateColumns: '3fr 1fr', gap: '24px' }}>
         {/* Grilla de productos filtrados */}
         <section>
-          <h2 style={{ marginTop: 0 }}>Productos ({filteredProducts.length})</h2>
+          <h2 style={{ marginTop: 0 }}>
+            Productos ({filteredProducts.length} de {products.length})
+          </h2>
 
           {filteredProducts.length === 0 ? (
             <p>No se encontraron productos con ese filtro.</p>
