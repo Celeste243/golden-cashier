@@ -102,7 +102,33 @@ export function App() {
           </h2>
 
           {filteredProducts.length === 0 ? (
-            <p>No se encontraron productos con ese filtro.</p>
+            <div
+              style={{
+                backgroundColor: '#ffffff',
+                border: '1px dashed #d1d5db',
+                borderRadius: '8px',
+                padding: '24px',
+                textAlign: 'center',
+                color: '#6b7280',
+              }}
+            >
+              <p style={{ marginTop: 0 }}>No se encontraron productos con ese filtro.</p>
+              <button
+                type="button"
+                onClick={handleClearFilters}
+                style={{
+                  padding: '8px 16px',
+                  borderRadius: '6px',
+                  border: '1px solid #2563eb',
+                  backgroundColor: '#eff6ff',
+                  color: '#2563eb',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                }}
+              >
+                Mostrar todos los productos
+              </button>
+            </div>
           ) : (
             <div
               style={{
