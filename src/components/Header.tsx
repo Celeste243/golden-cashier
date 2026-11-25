@@ -1,6 +1,6 @@
 interface HeaderProps {
   searchText: string;
-  onSearchChange: (text: string) => void;
+  onSearchChange: (value: string) => void;
   totalItems: number;
 }
 
@@ -11,41 +11,46 @@ export function Header({ searchText, onSearchChange, totalItems }: HeaderProps) 
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        borderBottom: '2px solid #ccc',
         paddingBottom: '16px',
         marginBottom: '20px',
+        borderBottom: '3px solid #f59e0b',
         gap: '16px',
       }}
     >
-      {/* Título principal de la app */}
-      <h1 style={{ margin: 0, fontSize: '24px' }}>Golden Cashier 🪙</h1>
+      <div>
+        <h1 style={{ margin: 0, fontSize: '28px', color: '#111827' }}>
+          Golden Cashier 🛒
+        </h1>
+        <p style={{ margin: '4px 0 0', fontSize: '14px', color: '#6b7280' }}>
+          Sistema de Punto de Venta
+        </p>
+      </div>
 
-      {/* Barra de búsqueda controlada (criterio de filtrado 1) */}
       <input
         type="text"
-        placeholder="🔍 Buscar producto..."
+        placeholder="Buscar producto..."
         value={searchText}
         onChange={(e) => onSearchChange(e.target.value)}
         style={{
           padding: '8px 12px',
           fontSize: '16px',
+          width: '280px',
           borderRadius: '6px',
-          border: '1px solid #aaa',
-          width: '300px',
+          border: '1px solid #d1d5db',
         }}
       />
 
-      {/* Contador visual del carrito */}
       <div
         style={{
-          fontWeight: 'bold',
           fontSize: '16px',
-          backgroundColor: '#f3f4f6',
+          fontWeight: 'bold',
+          backgroundColor: '#fef3c7',
+          color: '#92400e',
           padding: '8px 14px',
           borderRadius: '6px',
         }}
       >
-        🛒 Carrito: {totalItems}
+        Carrito: {totalItems} {totalItems === 1 ? 'ítem' : 'ítems'}
       </div>
     </header>
   );
