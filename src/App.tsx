@@ -25,16 +25,22 @@ export function App() {
     return matchesText && matchesCategory;
   });
 
-  // Agregar producto al carrito (si ya existe, suma 1 a la cantidad)
+  // Agregar producto al carrito respetando el stock disponible
   const handleAddToCart = (product: Product): void => {
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {
+        if (existingItem.quantity >= product.stock) {
+          return prevCart;
+        }
         return prevCart.map((item) =>
           item.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
+      }
+      if (product.stock <= 0) {
+        return prevCart;
       }
       return [...prevCart, { ...product, quantity: 1 }];
     });
@@ -92,13 +98,18 @@ export function App() {
                 gap: '16px',
               }}
             >
-              {filteredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={product}
-                  onAddToCart={handleAddToCart}
-                />
-              ))}
+              {filteredProducts.map((product) => {
+                const inCart = cart.find((item) => item.id === product.id);
+                const availableStock = product.stock - (inCart ? inCart.quantity : 0);
+
+                return (
+                  <ProductCard
+                    key={product.id}
+                    product={{ ...product, stock: availableStock }}
+                    onAddToCart={() => handleAddToCart(product)}
+                  />
+                );
+              })}
             </div>
           )}
         </section>
@@ -106,7 +117,7 @@ export function App() {
         {/* Panel derecho del carrito */}
         <CartPanel
           items={cart}
-          onIncreaseItem={handleAddToCart}
+          onIncreaseItem={(item) => handleAddToCart(item)}
           onDecreaseItem={handleDecreaseItem}
           onRemoveItem={handleRemoveFromCart}
           onClearCart={handleClearCart}
