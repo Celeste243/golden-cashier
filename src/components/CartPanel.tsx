@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import type { CartItem } from '../types/product';
 
 interface CartPanelProps {
@@ -15,10 +16,18 @@ export function CartPanel({
   onRemoveItem,
   onClearCart,
 }: CartPanelProps) {
+  const [checkoutSuccess, setCheckoutSuccess] = useState<boolean>(false);
+
   const totalAmount = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
+
+  const handleCheckout = (): void => {
+    onClearCart();
+    setCheckoutSuccess(true);
+    setTimeout(() => setCheckoutSuccess(false), 3000);
+  };
 
   return (
     <aside
@@ -34,6 +43,21 @@ export function CartPanel({
       }}
     >
       <h2 style={{ margin: 0, fontSize: '20px' }}>Mi Carrito 🧾</h2>
+
+      {checkoutSuccess && (
+        <div
+          style={{
+            backgroundColor: '#dcfce7',
+            color: '#166534',
+            padding: '10px',
+            borderRadius: '6px',
+            fontSize: '14px',
+            fontWeight: 'bold',
+          }}
+        >
+          ¡Cobro realizado con éxito!
+        </div>
+      )}
 
       {items.length === 0 ? (
         <p style={{ color: '#6b7280', fontSize: '14px' }}>
@@ -114,7 +138,7 @@ export function CartPanel({
 
           <button
             type="button"
-            onClick={onClearCart}
+            onClick={handleCheckout}
             style={{
               padding: '10px',
               fontSize: '15px',
