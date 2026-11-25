@@ -5,6 +5,8 @@ type FilterOption = 'Todos' | Category;
 interface CategoryFilterProps {
   selectedCategory: FilterOption;
   onCategoryChange: (category: FilterOption) => void;
+  hasActiveFilters: boolean;
+  onClearFilters: () => void;
 }
 
 const CATEGORIES: FilterOption[] = ['Todos', 'Lácteos', 'Bebidas', 'Almacén'];
@@ -12,11 +14,14 @@ const CATEGORIES: FilterOption[] = ['Todos', 'Lácteos', 'Bebidas', 'Almacén'];
 export function CategoryFilter({
   selectedCategory,
   onCategoryChange,
+  hasActiveFilters,
+  onClearFilters,
 }: CategoryFilterProps) {
   return (
     <section
       style={{
         display: 'flex',
+        alignItems: 'center',
         gap: '12px',
         marginBottom: '20px',
       }}
@@ -44,6 +49,25 @@ export function CategoryFilter({
           </button>
         );
       })}
+
+      {hasActiveFilters && (
+        <button
+          type="button"
+          onClick={onClearFilters}
+          style={{
+            padding: '8px 14px',
+            fontSize: '14px',
+            borderRadius: '6px',
+            border: '1px solid #dc2626',
+            backgroundColor: '#fef2f2',
+            color: '#dc2626',
+            cursor: 'pointer',
+            marginLeft: 'auto',
+          }}
+        >
+          Limpiar filtros
+        </button>
+      )}
     </section>
   );
 }
